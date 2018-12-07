@@ -83,7 +83,18 @@ public class HuffProcessor {
 	}
 
 	public HuffNode readTreeHeader(BitInputStream in) {
-		// TODO Auto-generated method stub
-		return null;
+		int bit = in.readBits(1);
+		if(bit ==-1) {
+			throw new HuffException("bad bit " + bit);
+		}
+		if(bit == 0) {
+			HuffNode left = readTreeHeader(in);
+			HuffNode right = readTreeHeader(in);
+			return new HuffNode(0,0,left,right);
+		}
+		else {
+			int value = in.readBits(BITS_PER_WORD + 1);
+			return new HuffNode(value, 0, null, null);
+		}
 	}
 }
