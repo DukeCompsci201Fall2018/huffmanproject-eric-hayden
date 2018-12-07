@@ -61,14 +61,18 @@ public class HuffProcessor {
 		writeCompressedBits(codings,in,out);
 		out.close();
 	}
-	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
-		// TODO Auto-generated method stub
-		
+	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {		
 	}
 
 	private void writeHeader(HuffNode root, BitOutputStream out) {
-		// TODO Auto-generated method stub
-		
+		if (root.myLeft == null && root.myRight == null) {
+			out.writeBits(1, 1);
+			out.writeBits(BITS_PER_WORD + 1, root.myValue);
+		} else {
+			out.writeBits(1, 0);
+			writeHeader(root.myLeft, out);
+			writeHeader(root.myRight, out);
+		}
 	}
 
 	private void makeCodingsFromTree(HuffNode root, String path, String[] encodings) {
