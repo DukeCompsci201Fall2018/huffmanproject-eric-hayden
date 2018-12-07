@@ -138,7 +138,7 @@ public class HuffProcessor {
 		out.close();
 	}
 
-	public void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
+	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
 		// TODO Auto-generated method stub
 		HuffNode current = root;
 		while(true) {
@@ -160,7 +160,7 @@ public class HuffProcessor {
 		}
 	}
 
-	public HuffNode readTreeHeader(BitInputStream in) {
+	private HuffNode readTreeHeader(BitInputStream in) {
 		int bit = in.readBits(1);
 		if(bit ==-1) {
 			throw new HuffException("bad bit " + bit);
