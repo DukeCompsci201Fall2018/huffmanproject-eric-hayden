@@ -91,7 +91,7 @@ public class HuffProcessor {
 				if(current.myValue == 1) {
 					if(current.myValue == PSEUDO_EOF) break;
 					else {
-						out.write();
+						out.writeBits(BITS_PER_WORD,current.myValue);
 						current = root;
 					}
 				}
