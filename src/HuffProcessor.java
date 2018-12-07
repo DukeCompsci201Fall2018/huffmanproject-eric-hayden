@@ -59,12 +59,13 @@ public class HuffProcessor {
 		String code;
 		while (true) {
 			int temp = in.readBits(BITS_PER_WORD);
+			if(temp == -1) break;
 			code = codings[temp];
 
 			out.writeBits(code.length(), Integer.parseInt(code, 2));
-			
-			if (temp == PSEUDO_EOF)  break;
 		}
+		code = codings[PSEUDO_EOF];
+		out.writeBits(code.length(), Integer.parseInt(code,2));
 	}
 
 	private void writeHeader(HuffNode root, BitOutputStream out) {
