@@ -41,13 +41,6 @@ public class HuffProcessor {
 	 *            Buffered bit stream writing to the output file.
 	 */
 	public void compress(BitInputStream in, BitOutputStream out){
-
-		/*while (true){
-			int val = in.readBits(BITS_PER_WORD);
-			if (val == -1) break;
-			out.writeBits(BITS_PER_WORD, val);
-		}
-		out.close();*/
 		
 		int[] counts = readForCounts(in);
 		HuffNode root = makeTreeFromCounts(counts);
@@ -61,7 +54,13 @@ public class HuffProcessor {
 		writeCompressedBits(codings,in,out);
 		out.close();
 	}
-	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {		
+	
+	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
+		String code;
+		for (int i = 0; i < codings.length; i++) {
+			code = codings[i];
+			out.writeBits(code.length(), Integer.parseInt(code, 2));
+		}
 	}
 
 	private void writeHeader(HuffNode root, BitOutputStream out) {
